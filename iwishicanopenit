@@ -1,0 +1,27 @@
+const int sensorPin = 34;  // Pin Sensor Gas
+const int ledPin = 2;      // Pin LED bawaan ESP32 (biasanya Pin 2)
+const int batasBahaya = 1000; // Batas angka dianggap "BAHAYA"
+
+void setup() {
+  Serial.begin(9600);
+  pinMode(sensorPin, INPUT);
+  pinMode(ledPin, OUTPUT); // Siapkan pin LED sebagai output
+}
+
+void loop() {
+  int nilaiGas = analogRead(sensorPin); // Baca sensor
+
+  Serial.print("Nilai Gas: ");
+  Serial.print(nilaiGas);
+
+  // Logika ALARM
+  if (nilaiGas > batasBahaya) {
+    Serial.println(" | STATUS: BAHAYA! ADA GAS!");
+    digitalWrite(ledPin, HIGH); // Nyalakan Lampu LED
+  } else {
+    Serial.println(" | STATUS: Aman");
+    digitalWrite(ledPin, LOW);  // Matikan Lampu LED
+  }
+
+  delay(500); // Update setiap setengah detik
+}
